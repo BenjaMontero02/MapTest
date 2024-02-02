@@ -7,7 +7,6 @@ function BtnReset({reset}) {
 
     const resetBtn = () => {
         reset();
-        setMarkersNow()
     }
 
     return (

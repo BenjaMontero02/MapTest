@@ -54,7 +54,6 @@ function MapView() {
     const handleReset = () => {
         setMarkersNow();
         setSelectedProvince(null);
-        console.log(markersData)
     }
 
 
@@ -78,7 +77,7 @@ function MapView() {
                     }}
 
                 />
-                {markersNow.length !== 0 ? <RenderMarkers markersData={markersNow} deleteMarker={removeMarkerFromProvince} /> : null}
+                {markersNow.length !== 0 ? <RenderMarkers markersData={markersNow} /> : null}
                 <BtnReset reset={handleReset} />
                 <EventMap/>
             </MapContainer>

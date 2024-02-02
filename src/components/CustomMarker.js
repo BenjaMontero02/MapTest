@@ -5,7 +5,7 @@ import { set } from 'react-hook-form';
 import { Marker, Popup } from 'react-leaflet';
 
 
-function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScouting, provincia, deleteMarker}) {
+function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScouting, provincia}) {
     const [markerReference, setMarkerReference] = useState(null);
     const [draggable, setDraggable] = useState(false)
     const number = numberScouting ? numberScouting : null;

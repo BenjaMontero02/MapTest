@@ -8,7 +8,7 @@ import { statePopUp } from '@/globalStates/statePopUp';
 function ContentPopUp({ubication, position}) {
     const {register, handleSubmit} = useForm();
 
-    const { addMarker } = markersState(); 
+    const { addMarker, markersData } = markersState(); 
     const { setOpen } = statePopUp();
     const { icons } = iconState();
 
@@ -16,10 +16,19 @@ function ContentPopUp({ubication, position}) {
         let value = parseInt(data.iconType);
         //console.log(ubication)
         const {region, subregion, city} = ubication;
-        console.log(region)
-        console.log(subregion)
-        if(city) console.log(city)
-        addMarker(position, value, data.description);
+        
+        let number = Math.floor(5 * (5 + Math.random() * 4));
+        
+        let marker = {
+            position: [ubication.latitude, ubication.longitude],
+            iconType: value,
+            popUp: data.description,
+            numberScouting: number,
+            provincia: region,
+            ciudad: subregion,
+            barrio: city
+        }
+        addMarker(markersData, marker);
         setOpen();
     })
 

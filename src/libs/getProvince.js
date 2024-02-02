@@ -9,9 +9,9 @@ export const getProvince = async (lat, lng) => {
             lng: lng
         },
         headers: {
-            'X-RapidAPI-Key': 'df086eeaa5msh660123fa79e763dp1a3e71jsn09bb1a7388c6',
+            'X-RapidAPI-Key': '0cf3126fd8msh96a1ffc208a0676p160eedjsn8f43c3ecbc63',
             'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
-        }
+          }
     };
 
     try {

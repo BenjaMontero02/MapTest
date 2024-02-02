@@ -2,12 +2,9 @@ import React from 'react'
 import CustomMarker from './CustomMarker'
 import { iconState } from '@/globalStates/iconState';
 
-function RenderMarkers({markersData, deleteMarker}) {
+function RenderMarkers({markersData}) {
     const { icons } = iconState();
 
-    const setNewState = (provincia, number) => {
-        deleteMarker(provincia, number)
-    }
 
 
     return markersData.map((marker, i) => (
@@ -21,7 +18,7 @@ function RenderMarkers({markersData, deleteMarker}) {
                     icons={icons}
                     numberScouting={marker.numberScouting}
                     provincia={marker.provincia}
-                    deleteMarker={setNewState}
+                    
                 />
             ) : (
                 <CustomMarker

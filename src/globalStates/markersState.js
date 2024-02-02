@@ -231,9 +231,34 @@ export const markersState = create((set, get) => ({
         // Devuelve el nuevo arreglo de markersData modificado
         console.log(nuevaCopia)
         set((state) => ({markersData: nuevaCopia}))
+        set((state) => ({ markersNow: state.markersData.flatMap(marker => marker.markers) }))
     },
 
     listOfScoutings: [],
+
+    addMarker: (markers, marker) => {
+        let nuevaCopia = [...markers];
+
+        const provinceIndex = nuevaCopia.findIndex((provinceData) => provinceData.name === marker.provincia);
+
+        if (provinceIndex !== -1) {
+            // Si la provincia existe, agrega el nuevo marcador a su arreglo de marcadores
+            nuevaCopia[provinceIndex].markers.push(marker);
+        } else {
+            // Si la provincia no existe, crea un nuevo objeto de provincia y agrega el nuevo marcador
+            nuevaCopia.push({
+                name: marker.provincia,
+                markers: [marker],
+            });
+        }
+
+        // Devuelve el nuevo arreglo de markersData modificado
+        console.log(nuevaCopia)
+        set((state) => ({markersData: nuevaCopia}))
+        set((state) => ({ markersNow: state.markersData.flatMap(marker => marker.markers) }))
+        set((state) => ({ listOfScoutings: state.markersData.flatMap(marker => marker.markers) }))
+
+    },
 
     setListOfScoutings: () => {
         set((state) => ({ listOfScoutings: state.markersData.flatMap(marker => marker.markers) }))
