@@ -1,6 +1,7 @@
+import axios from "axios";
 export const getUbication = async (latitud, longitud) => {
+
     console.log("llego al get ubication");
-    const axios = require('axios');
 
     const options = {
         method: 'GET',
@@ -10,7 +11,7 @@ export const getUbication = async (latitud, longitud) => {
           lng: longitud
         },
         headers: {
-          'X-RapidAPI-Key': '4a147d5867mshc02cddef9de7de2p14078djsn6a868e6c0730',
+          'X-RapidAPI-Key': 'df086eeaa5msh660123fa79e763dp1a3e71jsn09bb1a7388c6',
           'X-RapidAPI-Host': 'address-from-to-latitude-longitude.p.rapidapi.com'
         }
       };

@@ -1,12 +1,14 @@
 import React from 'react'
 import CustomMarker from './CustomMarker'
 import { iconState } from '@/globalStates/iconState';
-import { markersState } from '@/globalStates/markersState'
 
-
-function RenderMarkers({markersData}) {
+function RenderMarkers({markersData, deleteMarker}) {
     const { icons } = iconState();
-    console.log("renderMarkers")
+
+    const setNewState = (provincia, number) => {
+        deleteMarker(provincia, number)
+    }
+
 
     return markersData.map((marker, i) => (
          // Utiliza map en lugar de forEach para devolver un array de componentes
@@ -18,6 +20,8 @@ function RenderMarkers({markersData}) {
                     popUp={marker.popUp} // Usa el popUp de m en lugar de marker
                     icons={icons}
                     numberScouting={marker.numberScouting}
+                    provincia={marker.provincia}
+                    deleteMarker={setNewState}
                 />
             ) : (
                 <CustomMarker

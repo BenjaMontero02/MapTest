@@ -17,7 +17,7 @@ function Popup() {
           const longitud = position.lng;
       
           const address = await getUbication(latitud, longitud);
-          console.log(address.data.Results[0]);
+          
           setUbication(address.data.Results[0]);
 
         } catch (error) {

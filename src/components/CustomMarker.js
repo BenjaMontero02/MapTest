@@ -1,12 +1,22 @@
 import { markersState } from '@/globalStates/markersState';
+import { getProvince } from '@/libs/getProvince';
 import React, { useEffect, useRef, useState } from 'react'
+import { set } from 'react-hook-form';
 import { Marker, Popup } from 'react-leaflet';
 
 
-function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScouting }) {
+function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScouting, provincia, deleteMarker}) {
     const [markerReference, setMarkerReference] = useState(null);
     const [draggable, setDraggable] = useState(false)
     const number = numberScouting ? numberScouting : null;
+    
+    
+    const selectedIcon = iconCustomizer();
+    
+    const {markersData, setNewMarkersForProvince, removeMarker} = markersState();
+    useEffect(() => {
+      if (openPopUp) markerReference.openPopup();
+    }, [openPopUp])
     
     function iconCustomizer (){
         if(number != null){
@@ -16,12 +26,18 @@ function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScout
         }
     }
 
-    const selectedIcon = iconCustomizer();
-    
-    const {setMarkerPosition} = markersState();
-    useEffect(() => {
-        if (openPopUp) markerReference.openPopup();
-    }, [openPopUp])
+    const setNewProvince =  async () => {
+      try {
+          let newProvince = await getProvince(markerReference.getLatLng().lat, markerReference.getLatLng().lng)
+          setNewMarkersForProvince(newProvince.Results[0].region, provincia, number, markersData, [markerReference.getLatLng().lat, markerReference.getLatLng().lng])
+      } catch (error) {
+          console.error(error);
+      }
+    }
+
+    const setNewState = () => {
+      removeMarker(provincia, number, markersData);
+    }
 
     return (
         numberScouting != null ? (
@@ -40,17 +56,20 @@ function CustomMarker({ position, iconType, popUp, icons, openPopUp, numberScout
               },
 
               mouseup: () => {
+                if(!draggable) return   
                 setDraggable(false);
-                setMarkerPosition(numberScouting, [markerReference.getLatLng().lat, markerReference.getLatLng().lng]);
-                console.log(markerReference.getLatLng());
+                setNewProvince();
+                
+                
               },
             }}
           >
             <Popup>
               <div style={{ display: 'flex', flexDirection: "column", gap: 10, alignItems: "center" }}>
                 {number ? (
-                  <div>
+                  <div style={{display:'flex', flexDirection:"column", gap: 10, alignContent: "center", justifyContent:"center"}}>
                     {popUp} - {number}
+                    <button onClick={setNewState}>Eliminar</button>
                   </div>
                 ) : (
                   <div>{popUp}</div>

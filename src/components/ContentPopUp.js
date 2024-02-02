@@ -14,12 +14,17 @@ function ContentPopUp({ubication, position}) {
 
     const onSubmit = handleSubmit((data) => {
         let value = parseInt(data.iconType);
+        //console.log(ubication)
+        const {region, subregion, city} = ubication;
+        console.log(region)
+        console.log(subregion)
+        if(city) console.log(city)
         addMarker(position, value, data.description);
         setOpen();
     })
 
     return (
-        <div>
+        <div className='contentPopUp'>
             <h1>Guardar Punto</h1>
             <h4>Provincia: {ubication.region}</h4>
             <h4>Ciudad: {ubication.subregion}</h4>

@@ -65,7 +65,42 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 1000000;
+}
+
+.contentPopUp{
+  display: flex;
+  flex-direction: column;
+  
+  h1{
+    margin-bottom: 5px;
+  }
+
+  h4{
+    margin-bottom: 5px;
+  }
+
+  form{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    > input {
+      height: 100px;
+      padding: 0px;
+      text-align: top;
+      display: flex;
+      justify-content: flex-start;
+      flex-direction: column;
+
+    }
+
+    > select{
+      width: 200px;
+    }
+  }
 }
 
 .popup-content {

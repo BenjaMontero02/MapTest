@@ -5,13 +5,14 @@ import 'leaflet/dist/leaflet.css'
 import EventMap from './EventMap'
 import RenderMarkers from './RenderMarkers'
 import { markersState } from '@/globalStates/markersState'
-import geoLocation from '../provincia.json'
+import geoLocation from '@/libs/provincia.json'
 import BtnReset from './BtnReset'
+import { getProvince } from '@/libs/getProvince'
 
 
 function MapView() {
 
-    const { markersData, listOfScoutings, setMarkersForProvince, setMarkersNow, markersNow, setListOfScoutings } = markersState();
+    const { markersData, listOfScoutings,updateMarkersState, setMarkersForProvince, setMarkersNow, markersNow, setListOfScoutings } = markersState();
     const [selectedProvince, setSelectedProvince] = useState(null);
 
     const [map, setMap] = useState(null);
@@ -33,6 +34,28 @@ function MapView() {
         setMarkersForProvince(prov);
     }
 
+    const removeMarkerFromProvince = (provinceName, numberScouting) => {
+        //console.log(markersData)
+        const updatedMarkersData = markersData.map((province) => {
+          if (province.name === provinceName) {
+            // Filtra los marcadores, excluyendo el marcador con el numberScouting dado
+            const updatedMarkers = province.markers.filter(
+              (marker) => marker.numberScouting !== numberScouting
+            );
+            return { ...province, markers: updatedMarkers };
+          }
+          return province;
+        });
+        updateMarkersState(updatedMarkersData);
+        setMarkersNow();
+        handleProv(provinceName)
+    }
+
+    const handleReset = () => {
+        setMarkersNow();
+        setSelectedProvince(null);
+        console.log(markersData)
+    }
 
 
     return (
@@ -55,8 +78,9 @@ function MapView() {
                     }}
 
                 />
-                {markersNow.length !== 0 ? <RenderMarkers markersData={markersNow} /> : null}
-                <BtnReset reset={() => setSelectedProvince(null)} />
+                {markersNow.length !== 0 ? <RenderMarkers markersData={markersNow} deleteMarker={removeMarkerFromProvince} /> : null}
+                <BtnReset reset={handleReset} />
+                <EventMap/>
             </MapContainer>
             {<div className='lista-captadores'>
                 <ul>
